@@ -65,7 +65,6 @@ export default {
     };
   },
   async mounted() {
-    console.log(this.param);
     await axios
       .get("http://localhost:5000/profile?secret_token=" + this.getToken)
       .then(response => (this.user = response.data.user));
@@ -78,7 +77,6 @@ export default {
     await axios
       .get("http://localhost:5000/niveau/" + this.param)
       .then(response => (this.niveau = response.data));
-    console.log(this.niveauMax);
     if (this.getNiveau == this.$route.params.id) {
       await axios.post("http://localhost:5000/avancement/", {
         NiveauId: this.$route.params.id - 1,

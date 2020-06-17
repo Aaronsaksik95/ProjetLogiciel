@@ -1,6 +1,7 @@
 var express = require('express');
 var morgan = require('morgan');
 var userModel = require('./models').User;
+var roles = require('./models').Roles;
 var passport = require('passport');
 var bcrypt = require('bcrypt');
 var bodyParser = require('body-parser');
@@ -69,6 +70,22 @@ app.post('/login', async (req, res, next) => {
         }
     })(req, res, next);
 });
+
+app.post('/roles', async function (req, res) {
+    const sameRoles = await roles.findOne({ where: { status: "user", status: "admin"} });
+
+        if (sameRoles === null) {
+            roles.create({
+                id: req.body.id,
+                status: req.body.status
+            })
+            return res.json('Role bien créé.');
+        }
+        else {
+            return res.json('Role déjà créé');
+        }
+    
+})
 
 app.use('/user', user)
 app.use('/niveau', niveau)

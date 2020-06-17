@@ -1,8 +1,6 @@
 <template>
   <div class="compte">
     <div class="d-flex justify-content-around">
-      
-
       <Login />
       <div class="mt-5">
         <router-link class="btn btn-light m-5" to="/">
@@ -18,6 +16,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Login from "../components/Login";
 import Signup from "../components/Signup";
 export default {
@@ -29,6 +28,15 @@ export default {
   data: function() {
     return {};
   },
-  mounted() {}
+  mounted() {
+    axios.post("http://localhost:5000/roles", {
+      id: 1,
+      status: "user"
+    });
+    axios.post("http://localhost:5000/roles", {
+      id: 2,
+      status: "admin"
+    });
+  }
 };
 </script>
