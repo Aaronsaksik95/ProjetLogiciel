@@ -1,12 +1,11 @@
 <template>
   <div class="compte">
-    <div class="d-flex justify-content-center">
-      <div class="mt-5">
-        <router-link class="btn btn-light m-5" to="/">
-          <h1 class="m-0 text-info">M</h1>
-          <h1 class="m-0">E</h1>
-          <h1 class="m-0">N</h1>
-          <h1 class="m-0">U</h1>
+    <div class="">
+      <div class="m-5 w-25 mx-auto">
+        <router-link class="btn btn-light m-2 d-block" to="/">
+          <h4 class="m-0">
+            <span class="text-info">M</span>ENU
+          </h4>
         </router-link>
       </div>
 

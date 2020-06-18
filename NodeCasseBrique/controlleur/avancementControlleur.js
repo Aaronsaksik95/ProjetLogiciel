@@ -16,8 +16,8 @@ router.get('/:UserId', function (req, res) {
 })
 router.get('/max/:UserId', function (req, res) {
     avancement.max('NiveauId',{ where: { UserId: req.params.UserId } })
-        .then(niveau => {
-            res.status(200).json(niveau+1)
+        .then(avancement => {
+            res.status(200).json(avancement+1)
 
         })
         .catch(err => {

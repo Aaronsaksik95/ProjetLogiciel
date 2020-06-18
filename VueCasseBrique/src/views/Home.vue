@@ -1,5 +1,18 @@
 <template>
   <div class="home">
+    <h1 class="p-1">
+      <span class="text-info">P</span>
+      <span class="text-warning">A</span>
+      <span class="text-danger">D</span>
+      <span class="text-success">D</span>
+      <span class="text-primary">L</span>
+      <span class="text-dark">E</span>
+      <span class="text-info">B</span>
+      <span class="text-warning">R</span>
+      <span class="text-danger">I</span>
+      <span class="text-success">C</span>
+      <span class="text-primary">K</span>
+    </h1>
     <nav class="w-25 mx-auto">
       <router-link
         v-if="this.user.RoleId"
@@ -57,13 +70,13 @@
         class="d-block p-4 m-2 shadow d-flex justify-content-between bg-success border-0"
         to="/niveau"
       >
-        <h5 class="text-light">Niveau</h5>
+        <h5 class="text-light">Niveaux</h5>
         <img class="img" src="../assets/volume.png" alt />
       </router-link>
 
       <router-link
         class="d-block p-4 m-2 shadow d-flex justify-content-between bg-primary border-0"
-        to="/"
+        to="/instruction"
       >
         <h5 class="text-light">Instructions</h5>
         <img class="img" src="../assets/instructions.png" alt />
@@ -83,11 +96,11 @@
           <form>
             <div>
               <small class="d-block text-danger">Music</small>
-              <input class="slider" type="range" min="0" max="1" step="0.1" v-model="music" />
+              <input class="slider" type="range" min="0" max="10" step="1" v-model="music" />
             </div>
             <div>
               <small class="d-block text-info">Son</small>
-              <input class="slider" type="range" min="0" max="1" step="0.1" v-model="son" />
+              <input class="slider" type="range" min="0" max="10" step="1" v-model="son" />
             </div>
             <button
               type="submit"
@@ -114,27 +127,20 @@ export default {
       score: 0,
       getToken: localStorage.getItem("token"),
       display: false,
-      music: localStorage.getItem("music"),
-      son: localStorage.getItem("son")
+      audio: [],
+      music: 5,
+      son: 5
     };
   },
-  computed: {
-    totalMusic: function() {
-      return this.music * 100;
-    },
-    totalSon: function() {
-      return this.son * 100;
-    }
-  },
+
   async mounted() {
-    localStorage.setItem("music", this.music);
-    localStorage.setItem("son", this.son);
     await axios
       .get("http://localhost:5000/profile?secret_token=" + this.getToken)
       .then(response => (this.user = response.data.user));
     await axios
       .get("http://localhost:5000/user/" + this.user.id)
       .then(response => (this.theUser = response.data));
+
     await axios
       .get("http://localhost:5000/avancement/max/" + this.user.id)
       .then(response => (this.niveau = response.data));
@@ -142,6 +148,11 @@ export default {
     await axios
       .get("http://localhost:5000/avancement/sum/" + this.user.id)
       .then(response => (this.score = response.data));
+    await axios.post("http://localhost:5000/audio/", {
+      son: 5,
+      music: 5,
+      UserId: this.user.id
+    });
   },
   methods: {
     Display() {
@@ -151,9 +162,11 @@ export default {
         this.display = true;
       }
     },
-    async submit() {
-      localStorage.setItem("music", this.music);
-      localStorage.setItem("son", this.son);
+    submit() {
+      axios.put("http://localhost:5000/audio/" + this.user.id, {
+        son: this.son,
+        music: this.music
+      });
     }
   }
 };
@@ -168,7 +181,7 @@ export default {
   height: 25px;
 }
 .home {
-  margin-top: 100px;
+  margin-top: 60px;
 }
 .slider {
   -webkit-appearance: none;

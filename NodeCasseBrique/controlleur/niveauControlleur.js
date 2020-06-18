@@ -27,6 +27,7 @@ router.get('/:id', async function (req, res) {
             res.send(err)
         })
 })
+
 router.get('/', function (req, res) {
     niveau.max('id')
         .then(niveauMax => {

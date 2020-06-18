@@ -2,15 +2,14 @@
   <div>
     <div v-if="this.user.RoleId" class="w-75 mx-auto">
       <h1 class="mt-5">Les Niveaux</h1>
+      <div class="m-5 w-25 mx-auto">
+        <router-link class="btn btn-light m-2 d-block" to="/">
+          <h4 class="m-0">
+            <span class="text-info">M</span>ENU
+          </h4>
+        </router-link>
+      </div>
       <div class="d-flex">
-        <div class="mt-5">
-          <router-link class="btn btn-light m-5" to="/">
-            <h1 class="m-0 text-info">M</h1>
-            <h1 class="m-0">E</h1>
-            <h1 class="m-0">N</h1>
-            <h1 class="m-0">U</h1>
-          </router-link>
-        </div>
         <div class="flex-wrap d-flex mx-auto justify-content-around m-5">
           <div class="card p-0 m-2 col-3 shadow mt-5 mb-2 rounded">
             <router-link :to="{path: '/game/1'}">
@@ -121,7 +120,7 @@ export default {
     await axios
       .get("http://localhost:5000/profile?secret_token=" + this.getToken)
       .then(response => (this.user = response.data.user));
-      console.log('role', this.user.RoleId)
+    console.log("role", this.user.RoleId);
     await axios
       .get("http://localhost:5000/niveau/1")
       .then(response => (this.niveau1 = response.data));

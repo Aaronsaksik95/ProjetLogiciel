@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var user = require('./controlleur/userControlleur');
 var niveau = require('./controlleur/niveauControlleur');
 var avancement = require('./controlleur/avancementControlleur');
+var audio = require('./controlleur/audioControlleur');
 var secureRoute = require('./controlleur/secureControlleur')
 const jwt = require('jsonwebtoken');
 var db = require('./models');
@@ -90,6 +91,7 @@ app.post('/roles', async function (req, res) {
 app.use('/user', user)
 app.use('/niveau', niveau)
 app.use('/avancement', avancement)
+app.use('/audio', audio)
 app.use('/profile', passport.authenticate('jwt', { session: false }), secureRoute);
 
 app.get('*', function (req, res) {

@@ -67,13 +67,13 @@
                 <div class="mt-2" v-on:click="Sound">
                   <img
                     class="img"
-                    v-if="this.musicV > 0 || this.sonV > 0"
+                    v-if="this.audio.music > 0 || this.audio.son > 0"
                     src="../assets/soundOff.png"
                     alt
                   />
                   <img class="img" v-else src="../assets/sound.png" alt />
                 </div>
-                <div v-if="this.niveauMax > this.$route.params.id">
+                <div v-if="this.avancementMax > this.$route.params.id && this.niveauMax > this.$route.params.id">
                   <router-link
                     class="btn btn-dark m-2 p-0 pl-3 pr-3"
                     :to="{path: '/redirect/' + this.niveauSuiv}"
@@ -116,12 +116,12 @@ export default {
       theUser: [],
       niveau: [],
       niveauMax: 0,
+      avancementMax: 0,
       niveauSuiv: parseInt(this.$route.params.id) + 1,
       niveauPrec: parseInt(this.$route.params.id) - 1,
       getNiveau: localStorage.getItem("niveau"),
       getToken: localStorage.getItem("token"),
-      musicV: localStorage.getItem("music"),
-      sonV: localStorage.getItem("son")
+      audio: []
     };
   },
   async mounted() {
@@ -136,7 +136,15 @@ export default {
       .then(response => (this.niveau = response.data));
     await axios
       .get("http://localhost:5000/avancement/max/" + this.user.id)
+      .then(response => (this.avancementMax = response.data));
+      console.log(this.avancementMax)
+    await axios
+      .get("http://localhost:5000/niveau/")
       .then(response => (this.niveauMax = response.data));
+      console.log(this.niveauMax)
+    await axios
+      .get("http://localhost:5000/audio/" + this.user.id)
+      .then(response => (this.audio = response.data));
 
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
@@ -207,8 +215,8 @@ export default {
       this.niveau.color2,
       this.niveau.color3
     ];
-    var musicV = this.musicV;
-    var sonV = this.sonV;
+    var musicV = this.audio.music / 10;
+    var sonV = this.audio.son / 10;
 
     var bricks = [];
     for (var c = 0; c <= brickRowCount; c++) {
@@ -218,7 +226,7 @@ export default {
           x: 0,
           y: 0,
           status: Math.floor(Math.random() * strongBlock) + 1,
-          joker: Math.floor(Math.random() * 12),
+          joker: Math.floor(Math.random() * 20),
           count: 3
         };
       }
@@ -439,12 +447,12 @@ export default {
                       balleP.classList.replace("bg-light", "bg-success");
                       timeBalleE = 10;
                       TimerBalleB();
-                      ballRadius = ballRadius + 3;
+                      ballRadius = ballRadius + 6;
                       setTimeout(function() {
                         clearInterval(intervalIdBB);
                         balleP.classList.replace("bg-success", "bg-light");
                         timeBalleE = 0;
-                        ballRadius = ballRadius - 3;
+                        ballRadius = ballRadius - 6;
                         testBB = false;
                       }, 10000);
                     }
@@ -452,15 +460,15 @@ export default {
                     if (ballRadius >= 10) {
                       JokerM();
                       testBM = true;
-                      balleM.classList.replace("bg-light", "bg-success");
+                      balleM.classList.replace("bg-light", "bg-danger");
                       timeBalleS = 10;
                       TimerBalleM();
-                      ballRadius = ballRadius - 3;
+                      ballRadius = ballRadius - 6;
                       setTimeout(function() {
                         clearInterval(intervalIdBM);
-                        balleM.classList.replace("bg-success", "bg-light");
+                        balleM.classList.replace("bg-danger", "bg-light");
                         timeBalleS = 0;
-                        ballRadius = ballRadius + 3;
+                        ballRadius = ballRadius + 6;
                         testBM = false;
                       }, 10000);
                     }
@@ -468,13 +476,13 @@ export default {
                     if (paddleWidth >= 100) {
                       JokerM();
                       testPM = true;
-                      paddleM.classList.replace("bg-light", "bg-success");
+                      paddleM.classList.replace("bg-light", "bg-danger");
                       timePaddleS = 10;
                       TimerPaddleM();
                       paddleWidth = paddleWidth - 30;
                       setTimeout(function() {
                         clearInterval(intervalIdPM);
-                        paddleM.classList.replace("bg-success", "bg-light");
+                        paddleM.classList.replace("bg-danger", "bg-light");
                         timePaddleS = 0;
                         paddleWidth = paddleWidth + 30;
                         testPM = false;
@@ -735,18 +743,26 @@ export default {
   },
   methods: {
     Sound() {
-      if (this.musicV == 0) {
-        localStorage.setItem("music", 0.5);
-        localStorage.setItem("son", 0.5);
-      } else if (this.sonV == 0) {
-        localStorage.setItem("music", 0.5);
-        localStorage.setItem("son", 0.5);
-      } else if (this.musicV > 0) {
-        localStorage.setItem("music", 0);
-        localStorage.setItem("son", 0);
-      } else if (this.sonV > 0) {
-        localStorage.setItem("music", 0);
-        localStorage.setItem("son", 0);
+      if (this.audio.music == 0) {
+        axios.put("http://localhost:5000/audio/" + this.user.id, {
+          son: 5,
+          music: 5
+        });
+      } else if (this.audio.son == 0) {
+        axios.put("http://localhost:5000/audio/" + this.user.id, {
+          son: 5,
+          music: 5
+        });
+      } else if (this.audio.music > 0) {
+        axios.put("http://localhost:5000/audio/" + this.user.id, {
+          son: 0,
+          music: 0
+        });
+      } else if (this.audio.son > 0) {
+        axios.put("http://localhost:5000/audio/" + this.user.id, {
+          son: 0,
+          music: 0
+        });
       }
       document.location.reload(true);
     }

@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Avancement, {
       onDelete: "cascade"
     });
+    User.hasMany(models.Audio, {
+      onDelete: "cascade"
+    });
   };
   return User;
 };

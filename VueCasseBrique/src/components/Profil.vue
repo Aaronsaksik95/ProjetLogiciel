@@ -1,5 +1,5 @@
 <template>
-  <div class="w-50">
+  <div class="w-50 mx-auto">
     <h1 class="mt-5">Mon profil</h1>
     <div class="w-100 bg-light p-5 mx-auto shadow">
       <form>
@@ -55,6 +55,7 @@ export default {
     },
     async DeleteUser(id) {
       axios.delete("http://localhost:5000/avancement/" + id)
+      axios.delete("http://localhost:5000/audio/" + id)
       axios.delete("http://localhost:5000/user/" + id);
       window.location.href = "/logout";
     }

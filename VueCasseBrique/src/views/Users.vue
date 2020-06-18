@@ -71,6 +71,7 @@ export default {
   methods: {
     async DeleteUser(id) {
       axios.delete("http://localhost:5000/avancement/" + id)
+      axios.delete("http://localhost:5000/audio/" + id)
       axios.delete("http://localhost:5000/user/" + id);
       document.location.reload(true);
     }

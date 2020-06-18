@@ -13,7 +13,7 @@
       <div v-if="getNiveau == this.$route.params.id">
         <div v-if="avancementMax < this.$route.params.id">
           <h2
-            class="text-success"
+            class="text-info"
           >Félicitation vous venez de terminer le Niveau {{$route.params.id-1}}</h2>
           <audio id="gameOver" src="../assets/Son/gameOver.mp3"></audio>
           <img
@@ -22,13 +22,13 @@
             alt
           />
           <router-link
-            class="btn btn-success mt-5"
+            class="btn btn-info mt-5"
             :to="{path: '/game/' + this.$route.params.id}"
           >Niveau suivant ></router-link>
         </div>
         <div v-else>
           <h2
-            class="text-success"
+            class="text-info"
           >Félicitation vous venez à nouveau de terminer le Niveau {{$route.params.id-1}}</h2>
           <img
             class="img-fluid w-50 d-block mx-auto mt-5"
@@ -36,7 +36,7 @@
             alt
           />
           <router-link
-            class="btn btn-success mt-5"
+            class="btn btn-info mt-5"
             :to="{path: '/game/' + this.$route.params.id}"
           >Essayez le Niveau {{$route.params.id}}</router-link>
         </div>

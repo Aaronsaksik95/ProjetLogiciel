@@ -1,7 +1,7 @@
 <template>
   <div class="w-50 mx-auto p-5">
     <h2 class="text-info">Modifier le niveau {{niveau.id}}</h2>
-    <div class="d-flex justify-content-around">
+    <div class="">
       <div class="mt-5">
         <div class="mt-5">
         <router-link class="btn btn-light m-2" to="/">Menu</router-link>
@@ -10,7 +10,7 @@
         <router-link class="btn btn-light m-2" to="/admin">Liste des niveaux</router-link>
       </div>
       </div>
-      <div class="w-50" v-if="this.user.RoleId == 2">
+      <div class="w-75 mx-auto" v-if="this.user.RoleId == 2">
         <form>
           Couleur
           <div class="d-flex justify-content-around">

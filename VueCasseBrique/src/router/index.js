@@ -6,6 +6,7 @@ import Compte from '../views/Compte.vue'
 import Logout from '../components/Logout.vue'
 import Avancement from '../components/Avancement.vue'
 import Redirect from '../components/redirect.vue'
+import Instruction from '../views/Instruction.vue'
 import Niveau from '../views/Niveau.vue'
 import Admin from '../views/Admin.vue'
 import Users from '../views/Users.vue'
@@ -37,6 +38,11 @@ Vue.use(VueRouter)
     path: '/niveau',
     name: 'Niveau',
     component: Niveau
+  },
+  {
+    path: '/instruction',
+    name: 'Instruction',
+    component: Instruction
   },
   {
     path: '/compte/:id',
